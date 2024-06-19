@@ -4,9 +4,9 @@
 <head>
   <title>Home Page</title>
 
-  <meta charset="UTF-8" >
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
@@ -18,7 +18,41 @@
 </head>
 
 <body>
-  <h1>Have fun! 🥔</h1>
+  <header>
+    <h1>Smart To Do List</h1>
+  </header>
+
+  <main>
+    <section id="add-item-section">
+      <h2>Add New Item</h2>
+      <form id="add-item-form">
+        <input type="text" id="item-name" required>
+        <button type="submit">Add Item</button>
+      </form>
+    </section>
+
+    <section class="todo-lists">
+      <section id="films-list">
+        <h3>Films/Series</h3>
+        <ul id="films-items"></ul>
+      </section>
+
+      <section id="books-list">
+        <h3>Books</h3>
+        <ul id="books-items"></ul>
+      </section>
+
+      <section id="restaurant-list">
+        <h3>Restaurants</h3>
+        <ul id="restaurants-items"></ul>
+      </section>
+
+      <section id="to-buy-list">
+        <h3>To Buy</h3>
+        <ul id="to-buy-items"></ul>
+      </section>
+    </section>
+  </main>
 </body>
 
 </html>
