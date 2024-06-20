@@ -8,12 +8,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
 
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
 </head>
@@ -25,7 +26,7 @@
 
   <main>
     <section id="add-item-section">
-      <h2>Add New Item</h2>
+      <h2 id="add-item-title">Add New Item</h2>
       <form id="add-item-form">
         <input type="text" id="item-name" required>
         <button type="submit">Add Item</button>
@@ -33,25 +34,33 @@
     </section>
 
     <section class="todo-lists">
-      <section id="films-list">
-        <h3>Films/Series</h3>
-        <ul id="films-items"></ul>
-      </section>
+      <div class="card">
+        <section id="films-list">
+          <h3 class="category-title">Films/Series</h3>
+          <ul id="films-items"></ul>
+        </section>
+      </div>
 
-      <section id="books-list">
-        <h3>Books</h3>
-        <ul id="books-items"></ul>
-      </section>
+      <div class="card">
+        <section id="books-list">
+          <h3 class="category-title">Books</h3>
+          <ul id="books-items"></ul>
+        </section>
+      </div>
 
-      <section id="restaurant-list">
-        <h3>Restaurants</h3>
-        <ul id="restaurants-items"></ul>
-      </section>
+      <div class="card">
+        <section id="restaurant-list">
+          <h3 class="category-title">Restaurants</h3>
+          <ul id="restaurants-items"></ul>
+        </section>
+      </div>
 
-      <section id="to-buy-list">
-        <h3>To Buy</h3>
-        <ul id="to-buy-items"></ul>
-      </section>
+      <div class="card">
+        <section id="to-buy-list">
+          <h3 class="category-title">To Buy</h3>
+          <ul id="to-buy-items"></ul>
+        </section>
+      </div>
     </section>
   </main>
 </body>
