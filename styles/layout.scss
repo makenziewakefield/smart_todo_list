@@ -1,6 +1,17 @@
 // See: https://sass-lang.com/
 
-body,
-html {
+@import 'navbar';
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #e6e3cd;
   margin: 0;
+  padding: 0;
+}
+
+main {
+  margin: 2rem auto;
+  max-width: 800px;
+  padding: 1rem;
+  border-radius: 8px;
 }
