@@ -5,6 +5,7 @@ require('dotenv').config();
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser')
 
 const PORT = process.env.PORT || 8080;
 const app = express();
@@ -15,6 +16,7 @@ app.set('view engine', 'ejs');
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan('dev'));
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   '/styles',
@@ -26,11 +28,21 @@ app.use(
 );
 app.use(express.static('public'));
 
+// log-in
+// do this instead
+app.get('/login/:id', (req, res) => {
+  // or using plain-text cookies
+  res.cookie('user_id', req.params.id);
+  // send the user somewhere
+  res.redirect('/home');
+});
+
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
-const userApiRoutes = require('./routes/users-api');
+const userApiRoutes = require('./routes/users/users-api');
 const widgetApiRoutes = require('./routes/widgets-api');
-const usersRoutes = require('./routes/users');
+const usersRoutes = require('./routes/users/users');
+const userItems = require('./routes/items/items-api');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -38,13 +50,15 @@ const usersRoutes = require('./routes/users');
 app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
+app.use('/api/items', userItems);
+
 // Note: mount other resources here, using the same pattern above
 
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 
-app.get('/', (req, res) => {
+app.get('/home', (req, res) => {
   res.render('index');
 });
 

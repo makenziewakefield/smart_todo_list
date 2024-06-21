@@ -7,9 +7,9 @@
 
 const express = require('express');
 const router  = express.Router();
-const userQueries = require('../db/queries/users');
+const userQueries = require('../../db/queries/users');
 
-router.get('/', (req, res) => {
+router.get('/home', (req, res) => {
   userQueries.getUsers()
     .then(users => {
       res.json({ users });
@@ -22,3 +22,6 @@ router.get('/', (req, res) => {
 });
 
 module.exports = router;
+
+
+
