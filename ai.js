@@ -44,7 +44,7 @@ const categorizeItem = async function (item) {
         { role: "system", content: "You are an expert in item classification." },
         { 
           role: "user", 
-          content: `Please classify the following item as 'restaurant', 'book', 'movie', or 'none'. If an item is neither a restaurant, book, nor movie, it will be placed in 'none'. An item can have multiple categories aside from none.
+          content: `Please classify the following item as 'restaurant', 'book', 'movie', or 'none'. If an item is neither a restaurant, book, nor movie, it will be placed in 'none'.
                     Respond with only 'restaurant', 'book', 'movie', or 'none'.
                     Item: ${item}` 
         }
@@ -96,8 +96,8 @@ const itemIntoDatabase = async function (user_id, title, category_id) {
 
 (async () => {
   try {
-    const item = 'Jurassic Park'; 
-    const user_id = 4; 
+    const item = 'Snakes on a plane'; 
+    const user_id = 3; 
 
     const category_id = await categorizeItem(item);
     const insertedItem = await itemIntoDatabase(user_id, item, category_id);
