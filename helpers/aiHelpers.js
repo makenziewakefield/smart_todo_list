@@ -1,5 +1,6 @@
 const OpenAI = require('openai');
-require('dotenv').config();
+const path = require('path')
+require('dotenv').config({ path: path.resolve('../.env')});
 const {Pool} = require('pg')
 
 const pool = new Pool({
@@ -114,19 +115,55 @@ const itemIntoDatabase = async function (user_id, title, category_id) {
   }
 };
 
+const isItem = async function(word) {
+  try {
+    const response = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [
+        { role: "system", content: "You are an expert in word classification." },
+        { 
+          role: "user", 
+          content: `Please verify if the word the user submitted is an object. If the word is an object, return '1'. If the word is not an object, return '2'. If the word is not a real word, return '2'. Word: ${word}`
+        }
+      ],
+      max_tokens: 20,
+    });
+
+    // Log the full response for debugging purposes
+    console.log('OpenAI API Response:', response);
+
+    // Assuming response.choices is an array with one choice
+    const responseText = response.choices[0].message.content.trim().toLowerCase();
+
+    // Check the response and determine if the word is an object
+    if (responseText.includes('1')) {
+      return true;
+    } else if (responseText.includes('2')) {
+      return false;
+    } else {
+      // Handle unexpected responses
+      console.error('Unexpected response from OpenAI:', responseText);
+      throw new Error('Unexpected response from OpenAI');
+    }
+  } catch (error) {
+    console.error('Error calling OpenAI API:', error);
+    throw error;
+  }
+};
+
 (async () => {
   try {
-    const item = 'Lord of the Rings'; 
+    const word = 'r45tr'; // Change the word here for testing
 
-    const isRealItem = await isItem(item);
-    console.log(`Is '${item}' a real item?`, isRealItem);
+    const isObjectWord = await isItem(word);
+    console.log(`Is '${word}' an object?`, isObjectWord);
   } catch (error) {
     console.error('Error:', error);
   }
 })();
 
-
 module.exports = {
+  isItem,
   categorizeItem,
   itemIntoDatabase
 }
