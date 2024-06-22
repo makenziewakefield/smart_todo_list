@@ -12,11 +12,15 @@
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
 
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
+  <script defer src="/scripts/users.js"></script>
+
 </head>
 
 <body>
@@ -28,8 +32,8 @@
     <section id="add-item-section">
       <h2 id="add-item-title">Add New Item</h2>
       <form id="add-item-form">
-        <input type="text" id="item-name" required>
-        <button type="submit">Add Item</button>
+        <input type="text" id="new-item" name="new-item" required>
+        <button type="submit" id="item-submit-button" data-user-id="<%= userItems[0].user_id %>">Add Item</button>
       </form>
     </section>
 
@@ -37,28 +41,81 @@
       <div class="card">
         <section id="films-list">
           <h3 class="category-title">Films/Series</h3>
-          <ul id="films-items"></ul>
-        </section>
-      </div>
+          <ul id="films-items">
+            <% for (let item in userItems) {
+              if (userItems[item].category_id === 1) { %>
+                <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                    <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
+                  </div>
+                  <div class="action-buttons">
+                    <button class="btn-delete btn-delete-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>"><i class="fa-regular fa-trash-can"></i></button>
+                  </div>
+                </li>
+            <% }}%>
 
-      <div class="card">
-        <section id="books-list">
-          <h3 class="category-title">Books</h3>
-          <ul id="books-items"></ul>
+          </ul>
         </section>
       </div>
 
       <div class="card">
         <section id="restaurant-list">
           <h3 class="category-title">Restaurants</h3>
-          <ul id="restaurants-items"></ul>
+          <ul id="restaurants-items">
+            <% for (let item in userItems) {
+              if (userItems[item].category_id === 2) { %>
+                <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                    <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
+                  </div>
+                  <div class="action-buttons">
+                    <button class="btn-delete btn-delete-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>"><i class="fa-regular fa-trash-can"></i></button>
+                  </div>
+                </li>
+            <% }}%>
+          </ul>
+        </section>
+      </div>
+
+      <div class="card">
+        <section id="books-list">
+          <h3 class="category-title">Books</h3>
+          <ul id="books-items">
+            <% for (let item in userItems) {
+              if (userItems[item].category_id === 3) { %>
+                <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                    <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
+                  </div>
+                  <div class="action-buttons">
+                    <button class="btn-delete btn-delete-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>"><i class="fa-regular fa-trash-can"></i></button>
+                  </div>
+                </li>
+            <% }}%>
+          </ul>
         </section>
       </div>
 
       <div class="card">
         <section id="to-buy-list">
           <h3 class="category-title">To Buy</h3>
-          <ul id="to-buy-items"></ul>
+          <ul id="to-buy-items">
+            <% for (let item in userItems) {
+              if (userItems[item].category_id === 4) { %>
+                <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                    <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
+                  </div>
+                  <div class="action-buttons">
+                    <button class="btn-delete btn-delete-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>"><i class="fa-regular fa-trash-can"></i></button>
+                  </div>
+                </li>
+            <% }}%>
+          </ul>
         </section>
       </div>
     </section>

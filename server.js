@@ -59,7 +59,8 @@ app.use('/api/items', userItems);
 // Separate them into separate routes files (see above).
 
 app.get('/home', (req, res) => {
-  res.render('index');
+  console.log('//////////RENDERING FROM SERVER.JS////////');
+  res.redirect('/users');
 });
 
 app.listen(PORT, () => {
