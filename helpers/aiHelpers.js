@@ -1,6 +1,6 @@
 const OpenAI = require('openai');
 const path = require('path')
-require('dotenv').config({ path: path.resolve('../.env')});
+require('dotenv').config({ path: path.resolve(__dirname, '../.env')});
 const {Pool} = require('pg')
 
 const pool = new Pool({
@@ -126,22 +126,18 @@ const isItem = async function(word) {
           content: `Please verify if the word the user submitted is an object. If the word is an object, return '1'. If the word is not an object, return '2'. If the word is not a real word, return '2'. Word: ${word}`
         }
       ],
-      max_tokens: 20,
+      max_tokens: 50,
     });
 
-    // Log the full response for debugging purposes
     console.log('OpenAI API Response:', response);
 
-    // Assuming response.choices is an array with one choice
     const responseText = response.choices[0].message.content.trim().toLowerCase();
 
-    // Check the response and determine if the word is an object
     if (responseText.includes('1')) {
       return true;
     } else if (responseText.includes('2')) {
       return false;
     } else {
-      // Handle unexpected responses
       console.error('Unexpected response from OpenAI:', responseText);
       throw new Error('Unexpected response from OpenAI');
     }
@@ -150,17 +146,6 @@ const isItem = async function(word) {
     throw error;
   }
 };
-
-(async () => {
-  try {
-    const word = 'r45tr'; // Change the word here for testing
-
-    const isObjectWord = await isItem(word);
-    console.log(`Is '${word}' an object?`, isObjectWord);
-  } catch (error) {
-    console.error('Error:', error);
-  }
-})();
 
 module.exports = {
   isItem,
