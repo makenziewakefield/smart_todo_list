@@ -46,4 +46,15 @@ const deleteItem = (itemId) => {
       return data.rows;
     });
 };
+
+const updateItem = (itemId, categoryId) => {
+  return db.query(
+    `UPDATE FROM items
+    SET category_id = ?
+    WHERE item_id = ? `,
+    [categoryId, itemId]);
+    
+
+}
+
 module.exports = { getUsers, getUserItems, addNewItem, deleteItem };
