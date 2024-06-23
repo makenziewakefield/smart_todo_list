@@ -12,6 +12,7 @@ const userQueries = require('../../db/queries/users');
 router.get('/items', (req, res) => {
   userQueries.getUsers()
     .then(users => {
+      console.log('//////////RENDERING FROM ITEMS/API.JS////////');
       res.json({ users });
     })
     .catch(err => {

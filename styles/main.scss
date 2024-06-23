@@ -33,3 +33,13 @@
 button:hover {
   cursor: pointer;
 }
+
+li.list-items {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 40px 5px 0px;
+  ;
+}
+
+
