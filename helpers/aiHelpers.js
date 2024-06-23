@@ -123,7 +123,7 @@ const isItem = async function(word) {
         { role: "system", content: "You are an expert in word classification." },
         { 
           role: "user", 
-          content: `Please verify if the word the user submitted is an object. If the word is an object, return '1'. If the word is not an object, return '2'. If the word is not a real word, return '2'. Word: ${word}`
+          content: `Please verify if the word the user submitted is a noun (including proper nouns like names). If the word is a noun, return '1'. If the word is not a noun, return '2'. If the word is not recognized as a real word, return '2'. Word: ${word}`
         }
       ],
       max_tokens: 50,
