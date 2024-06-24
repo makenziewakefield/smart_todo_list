@@ -46,38 +46,13 @@
               if (userItems[item].category_id === 1) { %>
                 <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                    <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox<%= item.id %>" data-id="<%= userItems[item].id %>" <%= userItems[item].is_complete ? 'checked' : '' %> >
                     <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
                   </div>
                   <div class="action-buttons">
-                    <button class="btn-update btn-update-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>">Update</button>
                     <button class="btn-delete btn-delete-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>"><i class="fa-regular fa-trash-can"></i></button>
                   </div>
                 </li>
-
-                <!-- Form To Update Category -->
-                <form class="update-category-form update-<%= userItems[item].id %>-form" style="display: none;">
-                  <h4>Update Category</h4>
-                  <input type="hidden" id="update-item-id" name="item_id" value="">
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="category" id="category1" value="1">
-                    <label class="form-check-label" for="category1">Films/Series</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="category" id="category2" value="2">
-                    <label class="form-check-label" for="category2">Restaurants</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="category" id="category3" value="3">
-                    <label class="form-check-label" for="category3">Books</label>
-                  </div>
-                  <div class="form-check">
-                    <input class="form-check-input" type="radio" name="category" id="category4" value="4">
-                    <label class="form-check-label" for="category4">To Buy</label>
-                  </div>
-                  <button type="submit">Update</button>
-                </form>
-                <!-- Form Ends!!! -->
             <% }}%>
 
           </ul>
@@ -92,11 +67,10 @@
               if (userItems[item].category_id === 2) { %>
                 <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                    <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox<%= item.id %>" data-id="<%= userItems[item].id %>" <%= userItems[item].is_complete ? 'checked' : '' %> >
                     <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
                   </div>
                   <div class="action-buttons">
-                    <button class="btn-update btn-update-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>">Update</button>
                     <button class="btn-delete btn-delete-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>"><i class="fa-regular fa-trash-can"></i></button>
                   </div>
                 </li>
@@ -113,11 +87,10 @@
               if (userItems[item].category_id === 3) { %>
                 <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                    <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox<%= item.id %>" data-id="<%= userItems[item].id %>" <%= userItems[item].is_complete ? 'checked' : '' %> >
                     <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
                   </div>
                   <div class="action-buttons">
-                    <button class="btn-update btn-update-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>">Update</button>
                     <button class="btn-delete btn-delete-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>"><i class="fa-regular fa-trash-can"></i></button>
                   </div>
                 </li>
@@ -134,11 +107,10 @@
               if (userItems[item].category_id === 4) { %>
                 <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                    <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox<%= item.id %>" data-id="<%= userItems[item].id %>" <%= userItems[item].is_complete ? 'checked' : '' %> >
                     <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
                   </div>
                   <div class="action-buttons">
-                    <button class="btn-update btn-update-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>">Update</button>
                     <button class="btn-delete btn-delete-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>"><i class="fa-regular fa-trash-can"></i></button>
                   </div>
                 </li>
@@ -147,28 +119,6 @@
         </section>
       </div>
     </section>
-    <form id="update-category-form" style="display: none;">
-      <h4>Update Category</h4>
-      <input type="hidden" id="update-item-id" name="item_id" value="">
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="category" id="category1" value="1">
-        <label class="form-check-label" for="category1">Films/Series</label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="category" id="category2" value="2">
-        <label class="form-check-label" for="category2">Restaurants</label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="category" id="category3" value="3">
-        <label class="form-check-label" for="category3">Books</label>
-      </div>
-      <div class="form-check">
-        <input class="form-check-input" type="radio" name="category" id="category4" value="4">
-        <label class="form-check-label" for="category4">To Buy</label>
-      </div>
-      <button type="submit">Update</button>
-    </form>
-
   </main>
 </body>
 

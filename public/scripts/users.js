@@ -72,71 +72,25 @@ $(() => {
     });
   });
 
-  // Handling the UPDATE button click
-  $('.btn-update').on('click', function() {
-    const itemId = $(this).data('item-id');
-    console.log('//////item ID of the clicked update:  ', itemId)
-    // console.log("btn data id: ", $(this[data-item-id="${itemId}"]) )
-
-    // Check if the button is currently "Update" or "Cancel"
-    if ($(`.btn-update-${itemId}`).text() === 'Update') {
-      // Change button text to "Cancel"
-      $(`.btn-update-${itemId}`).text('Cancel').addClass('btn-cancel').removeClass('btn-update');
-
-      // Show the update form
-      // $('#update-item-id').val(itemId);
-      $(`.update-${itemId}-form`).slideDown();
-    } else {
-      // Change button text back to "Update"
-      $(`.btn-update-${itemId}`).text('Update').addClass('btn-update').removeClass('btn-cancel');
-
-      // Hide the update form
-      $(`.update-${itemId}-form`).slideUp();
-    }
-  });
-
-  // Handle update form submission
-  $('#update-category-form').submit((e) => {
+  $('.todo-done').on('change', function (e) {
     e.preventDefault();
-    const itemId = $('#update-item-id').val();
-    const selectedCategory = $('input[name="category"]:checked').val();
 
-    if (!selectedCategory) {
-      alert('Please select a category.');
-      return;
-    }
+    const itemId = $(this).data('id');
+    const isComplete = $(this).is(':checked');
 
     $.ajax({
+      url: '/users/items/complete-status',
       method: 'POST',
-      url: `/items/${itemId}/update-category`,
-      data: {
-        category_id: selectedCategory
+      data: JSON.stringify({ itemId, isComplete }),
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      success: function(response){
+        console.log('Item status updated:', response);
       },
-      success: (response) => {
-        console.log('Category updated successfully', response);
-
-        // Optionally, update the UI to reflect the change
-        // Hide the form and reset the button text after successful update
-        $('#update-category-form').slideUp();
-        $('.btn-cancel').text('Update').addClass('btn-update').removeClass('btn-cancel');
-      },
-      error: (xhr, status, errorThrown) => {
-        console.log("Error: " + errorThrown);
-        console.log("Status: " + status);
-        console.log(xhr);
+      error: function (err) {
+        console.log('Error updating item completion status (scripts):', err);
       }
     });
   });
-
-  // Optional: Handle form cancellation if the user clicks outside the form or other conditions
-  $(document).on('click', (e) => {
-    const $form = $('#update-category-form');
-    if (!$form.is(e.target) && $form.has(e.target).length === 0 && !$(e.target).hasClass('btn-update')) {
-      // Hide the form and reset the button text if clicked outside the form
-      $form.slideUp();
-      $('.btn-cancel').text('Update').addClass('btn-update').removeClass('btn-cancel');
-    }
-  });
-
 
 });
