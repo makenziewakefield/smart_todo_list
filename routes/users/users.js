@@ -6,8 +6,11 @@
  */
 
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 const userQueries = require('../../db/queries/users');
+const bodyParser = require('body-parser');
+
+router.use(bodyParser.json());
 
 router.get('/', (req, res) => {
   userQueries.getUserItems(1)
@@ -72,6 +75,27 @@ router.post('/:id/delete', (req, res) => {
       res
         .status(500)
         .json({ error: err.message });
+    });
+
+});
+
+router.post('/items/complete-status', (req, res) => {
+
+  console.log('Request body:', req.body);
+
+  const { itemId, isComplete } = req.body;
+
+  console.log('Recieved itemId:', itemId);
+  console.log('Recieved isComplete:', isComplete);
+
+  userQueries.itemComplete(itemId, isComplete)
+    .then(updatedItem => {
+      console.log('Updated item from DB:', updatedItem);
+      res.json(updatedItem);
+    })
+    .catch(err => {
+      console.log('Error in DB operation:', err);
+      res.status(500).json({ error: err.message });
     });
 
 });
