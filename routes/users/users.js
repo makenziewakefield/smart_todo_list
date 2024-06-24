@@ -8,6 +8,9 @@
 const express = require('express');
 const router  = express.Router();
 const userQueries = require('../../db/queries/users');
+const bodyParser = require('body-parser');
+
+router.use(bodyParser.json());
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env')});
 
@@ -89,19 +92,26 @@ router.post('/:id/create', async (req, res) => {
   }
 });
 
-router.post('/:id/push', async (req, res) => {
-  const item = req.body['new-item'];
-  const user_id = req.params.id; // Ensure consistency here as well
-  const noneCategoryId = 4; 
+router.post('/items/complete-status', (req, res) => {
 
-  try {
-    const insertedItem = await itemIntoDatabase(user_id, item, noneCategoryId);
-    res.status(201).send(insertedItem);
-  } catch (error) {
-    console.error('Error:', error);
-    res.status(500).send({ error: 'An error occurred while pushing the item to the "Product" category.' });
-  }
-});
+  console.log('Request body:', req.body);
+
+  const { itemId, isComplete } = req.body;
+
+  console.log('Recieved itemId:', itemId);
+  console.log('Recieved isComplete:', isComplete);
+
+  userQueries.itemComplete(itemId, isComplete)
+    .then(updatedItem => {
+      console.log('Updated item from DB:', updatedItem);
+      res.json(updatedItem);
+    })
+    .catch(err => {
+      console.log('Error in DB operation:', err);
+      res.status(500).json({ error: err.message });
+    });
+
+  });
 
 
 module.exports = router;
