@@ -53,8 +53,24 @@ const updateItem = (itemId, categoryId) => {
     SET category_id = ?
     WHERE item_id = ? `,
     [categoryId, itemId]);
-    
 
-}
 
-module.exports = { getUsers, getUserItems, addNewItem, deleteItem };
+};
+
+const itemComplete = (itemId, status) => {
+  return db.query(
+    `UPDATE items
+    SET is_complete = $1
+    WHERE id = $2
+    RETURNING *;`, [status, itemId])
+    .then(data => {
+      console.log(`Updated item with ID ${itemId} to complete status: ${status}`);
+      console.log('Updated item: ', data.rows[0]);
+      return data.rows[0];
+    })
+    .catch(err => {
+      console.error('Error updating item completion status (queries):', err.message);
+    })
+};
+
+module.exports = { getUsers, getUserItems, addNewItem, deleteItem, updateItem, itemComplete };
