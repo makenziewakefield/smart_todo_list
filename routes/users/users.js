@@ -57,31 +57,38 @@ router.post('/:id/delete', (req, res) => {
 
 });
 
-const path = require('path')
+// router.post('/:id/update', (req, res) => {
+
+// })
+
+const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../../.env')});
 
 //Helpers
 const {isItem, categorizeItem, itemIntoDatabase} = require('../../helpers/aiHelpers');
 
-router.post('/:id', async (req, res) => {
+router.post('/:id/create', async (req, res) => {
   const item = req.body['new-item'];
-  const user_id = req.params.id;
+  const userid = req.params.id;
   console.log(`Route hit with user_id: ${user_id}, item: ${item}`);
 
   try {
     const isRealItem = await isItem(item);
     console.log('Is real item:', isRealItem);
     if (!isRealItem) {
-      res.status(400).send({ error: 'This is not an item.' }); 
+      res.status(400).send({ error: 'This is not an item.' });
       return;
     }
-
+    console.log("*********Calling the categorize fuction::", categorizeItem(item));
     const category_id = await categorizeItem(item);
     console.log('Category ID:', category_id);
     const insertedItem = await itemIntoDatabase(user_id, item, category_id);
     console.log('Inserted Item:', insertedItem);
 
     res.status(201).send(insertedItem);
+    console.log('///////////// sending response to frontend///////', insertedItem);
+    res.status(200).send(insertedItem);
+    // res.redirect(`/users/${user_id}`);
   } catch (error) {
     console.error('Error:', error);
     res.status(500).send({ error: 'An error occurred while processing the item.' });
