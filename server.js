@@ -52,7 +52,7 @@ app.use('/api/users', userApiRoutes);
 app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 app.use('/api/items', userItems);
-app.use('/categorize', categorizeRoute)
+
 // Note: mount other resources here, using the same pattern above
 
 // Home page
