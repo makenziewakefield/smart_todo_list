@@ -5,27 +5,34 @@ $(() => {
     const userId = $('#item-submit-button').data('user-id');
     $.ajax({
       method: 'POST',
-      url: `/users/${userId}`,
+      url: `/users/${userId}/create`,
       data: $('#add-item-form').serialize()
     })
     .done((response) => {
-      response.forEach(item => {
-        const $filmsUl = $('#films-items');
-        const $restaurantsUL = $('#restaurants-items');
-        const $booksUl = $('#books-items');
-        const $toBuyUl = $('#to-buy-items');
+      console.log('*************  item received from the post req: ', response)
+      const $filmsUl = $('#films-items');
+      const $restaurantsUL = $('#restaurants-items');
+      const $booksUl = $('#books-items');
+      const $toBuyUl = $('#to-buy-items');
 
-      if (item.category_id === 1) {
-        $(`<li class="incomp-items">`).text(item.title).appendTo($filmsUl);
-      } else if (item.category_id === 2) {
-        $(`<li class="incomp-items">`).text(item.title).appendTo($restaurantsUL);
-      } else if (item.category_id === 3) {
-        $(`<li class="incomp-items">`).text(item.title).appendTo($booksUl);
-      } else if (item.category_id === 4) {
-        $(`<li class="incomp-items">`).text(item.title).appendTo($toBuyUl);
-      }
-      });
+    if (response.category_id === 1) {
+      $(`<li class="incomp-items">`).text(response.title).appendTo($filmsUl);
+    } else if (response.category_id === 2) {
+      $(`<li class="incomp-items">`).text(response.title).appendTo($restaurantsUL);
+    } else if (response.category_id === 3) {
+      $(`<li class="incomp-items">`).text(response.title).appendTo($booksUl);
+    } else if (response.category_id === 4) {
+      $(`<li class="incomp-items">`).text(response.title).appendTo($toBuyUl);
+    }
 
+    // Reset the form fields
+    $('#add-item-form')[0].reset();
+
+    })
+    .fail(( xhr, status, errorThrown ) => {
+      console.log( "Error: " + errorThrown );
+      console.log( "Status: " + status );
+      console.log( xhr );
     });
   });
 
