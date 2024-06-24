@@ -15,14 +15,25 @@ $(() => {
       const $booksUl = $('#books-items');
       const $toBuyUl = $('#to-buy-items');
 
+      const $newItem = $(`<li class="list-items incomp-items" data-item-id="${response.id}">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+        <label class="form-check-label" for="inlineCheckbox1">${response.title}</label>
+      </div>
+      <div class="action-buttons">
+        <button class="btn-delete btn-delete-${response.id}" data-item-id="${response.id}"><i class="fa-regular fa-trash-can"></i></button>
+      </div>
+    </li>`);
+
     if (response.category_id === 1) {
-      $(`<li class="incomp-items">`).text(response.title).appendTo($filmsUl);
+      $newItem.appendTo($filmsUl);
     } else if (response.category_id === 2) {
-      $(`<li class="incomp-items">`).text(response.title).appendTo($restaurantsUL);
+      $newItem.appendTo($restaurantsUL);
     } else if (response.category_id === 3) {
-      $(`<li class="incomp-items">`).text(response.title).appendTo($booksUl);
+      // $(`<li class="incomp-items">`).text(response.title).appendTo($booksUl);
+      $newItem.appendTo($booksUl);
     } else if (response.category_id === 4) {
-      $(`<li class="incomp-items">`).text(response.title).appendTo($toBuyUl);
+      $newItem.appendTo($toBuyUl);
     }
 
     // Reset the form fields
