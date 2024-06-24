@@ -5,27 +5,45 @@ $(() => {
     const userId = $('#item-submit-button').data('user-id');
     $.ajax({
       method: 'POST',
-      url: `/users/${userId}`,
+      url: `/users/${userId}/create`,
       data: $('#add-item-form').serialize()
     })
     .done((response) => {
-      response.forEach(item => {
-        const $filmsUl = $('#films-items');
-        const $restaurantsUL = $('#restaurants-items');
-        const $booksUl = $('#books-items');
-        const $toBuyUl = $('#to-buy-items');
+      console.log('*************  item received from the post req: ', response)
+      const $filmsUl = $('#films-items');
+      const $restaurantsUL = $('#restaurants-items');
+      const $booksUl = $('#books-items');
+      const $toBuyUl = $('#to-buy-items');
 
-      if (item.category_id === 1) {
-        $(`<li class="incomp-items">`).text(item.title).appendTo($filmsUl);
-      } else if (item.category_id === 2) {
-        $(`<li class="incomp-items">`).text(item.title).appendTo($restaurantsUL);
-      } else if (item.category_id === 3) {
-        $(`<li class="incomp-items">`).text(item.title).appendTo($booksUl);
-      } else if (item.category_id === 4) {
-        $(`<li class="incomp-items">`).text(item.title).appendTo($toBuyUl);
-      }
-      });
+      const $newItem = $(`<li class="list-items incomp-items" data-item-id="${response.id}">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+        <label class="form-check-label" for="inlineCheckbox1">${response.title}</label>
+      </div>
+      <div class="action-buttons">
+        <button class="btn-delete btn-delete-${response.id}" data-item-id="${response.id}"><i class="fa-regular fa-trash-can"></i></button>
+      </div>
+    </li>`);
 
+    if (response.category_id === 1) {
+      $newItem.appendTo($filmsUl);
+    } else if (response.category_id === 2) {
+      $newItem.appendTo($restaurantsUL);
+    } else if (response.category_id === 3) {
+      // $(`<li class="incomp-items">`).text(response.title).appendTo($booksUl);
+      $newItem.appendTo($booksUl);
+    } else if (response.category_id === 4) {
+      $newItem.appendTo($toBuyUl);
+    }
+
+    // Reset the form fields
+    $('#add-item-form')[0].reset();
+
+    })
+    .fail(( xhr, status, errorThrown ) => {
+      console.log( "Error: " + errorThrown );
+      console.log( "Status: " + status );
+      console.log( xhr );
     });
   });
 
@@ -62,7 +80,7 @@ $(document).ready(function() {
       return new Promise((resolve, reject) => {
         $.ajax({
           type: 'POST',
-          url: `/${userId}`,
+          url: `/${userId}/create`,
           data: JSON.stringify({ 'new-item': newItem }),
           contentType: 'application/json', // Ensure correct JSON MIME type
           success: function(response) {
