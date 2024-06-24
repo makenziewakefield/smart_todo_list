@@ -1,3 +1,4 @@
+
 // load .env data into process.env
 require('dotenv').config();
 
@@ -58,11 +59,6 @@ app.use('/api/items', userItems);
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
-
-app.use((req, res, next) => {
-  console.log(`Received ${req.method} request to ${req.url}`);
-  next();
-});
 
 app.get('/home', (req, res) => {
   console.log('//////////RENDERING FROM SERVER.JS////////');
