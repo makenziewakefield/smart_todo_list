@@ -1,5 +1,6 @@
 // Client facing scripts here
 $(() => {
+  // Ajax call for ADDING an ITEM
   $('#add-item-form').submit((e) => {
     e.preventDefault();
     const userId = $('#item-submit-button').data('user-id');
@@ -36,7 +37,7 @@ $(() => {
       $newItem.appendTo($toBuyUl);
     }
 
-    // Reset the form fields
+    // Empty the form fields
     $('#add-item-form')[0].reset();
 
     })
@@ -47,6 +48,7 @@ $(() => {
     });
   });
 
+  // Ajax call for DELETING an ITEM
   $('.btn-delete').on('click', function (e) {
     // const itemId = $('.btn-delete-item').data('item-id');
     e.preventDefault();
@@ -62,7 +64,79 @@ $(() => {
     // Handle success
     // alert('Item deleted successfully');
     $(`li[data-item-id="${itemId}"]`).remove();
-
+    })
+    .fail(( xhr, status, errorThrown ) => {
+      console.log( "Error: " + errorThrown );
+      console.log( "Status: " + status );
+      console.log( xhr );
     });
   });
+
+  // Handling the UPDATE button click
+  $('.btn-update').on('click', function() {
+    const itemId = $(this).data('item-id');
+    console.log('//////item ID of the clicked update:  ', itemId)
+    // console.log("btn data id: ", $(this[data-item-id="${itemId}"]) )
+
+    // Check if the button is currently "Update" or "Cancel"
+    if ($(`.btn-update-${itemId}`).text() === 'Update') {
+      // Change button text to "Cancel"
+      $(`.btn-update-${itemId}`).text('Cancel').addClass('btn-cancel').removeClass('btn-update');
+
+      // Show the update form
+      // $('#update-item-id').val(itemId);
+      $(`.update-${itemId}-form`).slideDown();
+    } else {
+      // Change button text back to "Update"
+      $(`.btn-update-${itemId}`).text('Update').addClass('btn-update').removeClass('btn-cancel');
+
+      // Hide the update form
+      $(`.update-${itemId}-form`).slideUp();
+    }
+  });
+
+  // Handle update form submission
+  $('#update-category-form').submit((e) => {
+    e.preventDefault();
+    const itemId = $('#update-item-id').val();
+    const selectedCategory = $('input[name="category"]:checked').val();
+
+    if (!selectedCategory) {
+      alert('Please select a category.');
+      return;
+    }
+
+    $.ajax({
+      method: 'POST',
+      url: `/items/${itemId}/update-category`,
+      data: {
+        category_id: selectedCategory
+      },
+      success: (response) => {
+        console.log('Category updated successfully', response);
+
+        // Optionally, update the UI to reflect the change
+        // Hide the form and reset the button text after successful update
+        $('#update-category-form').slideUp();
+        $('.btn-cancel').text('Update').addClass('btn-update').removeClass('btn-cancel');
+      },
+      error: (xhr, status, errorThrown) => {
+        console.log("Error: " + errorThrown);
+        console.log("Status: " + status);
+        console.log(xhr);
+      }
+    });
+  });
+
+  // Optional: Handle form cancellation if the user clicks outside the form or other conditions
+  $(document).on('click', (e) => {
+    const $form = $('#update-category-form');
+    if (!$form.is(e.target) && $form.has(e.target).length === 0 && !$(e.target).hasClass('btn-update')) {
+      // Hide the form and reset the button text if clicked outside the form
+      $form.slideUp();
+      $('.btn-cancel').text('Update').addClass('btn-update').removeClass('btn-cancel');
+    }
+  });
+
+
 });
