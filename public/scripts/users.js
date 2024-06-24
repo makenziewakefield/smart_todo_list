@@ -65,4 +65,26 @@ $(() => {
 
     });
   });
+
+  $('.todo-done').on('change', function (e) {
+    e.preventDefault();
+
+    const itemId = $(this).data('id');
+    const isComplete = $(this).is(':checked');
+
+    $.ajax({
+      url: '/users/items/complete-status',
+      method: 'POST',
+      data: JSON.stringify({ itemId, isComplete }),
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      success: function(response){
+        console.log('Item status updated:', response);
+      },
+      error: function (err) {
+        console.log('Error updating item completion status (scripts):', err);
+      }
+    });
+  });
+
 });

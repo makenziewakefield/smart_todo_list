@@ -46,7 +46,7 @@
               if (userItems[item].category_id === 1) { %>
                 <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                    <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox<%= item.id %>" data-id="<%= userItems[item].id %>" <%= userItems[item].is_complete ? 'checked' : '' %> >
                     <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
                   </div>
                   <div class="action-buttons">
@@ -67,7 +67,7 @@
               if (userItems[item].category_id === 2) { %>
                 <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                    <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox<%= item.id %>" data-id="<%= userItems[item].id %>" <%= userItems[item].is_complete ? 'checked' : '' %> >
                     <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
                   </div>
                   <div class="action-buttons">
@@ -87,7 +87,7 @@
               if (userItems[item].category_id === 3) { %>
                 <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                    <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox<%= item.id %>" data-id="<%= userItems[item].id %>" <%= userItems[item].is_complete ? 'checked' : '' %> >
                     <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
                   </div>
                   <div class="action-buttons">
@@ -107,7 +107,7 @@
               if (userItems[item].category_id === 4) { %>
                 <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                    <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox<%= item.id %>" data-id="<%= userItems[item].id %>" <%= userItems[item].is_complete ? 'checked' : '' %> >
                     <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
                   </div>
                   <div class="action-buttons">
