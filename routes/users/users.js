@@ -8,6 +8,11 @@
 const express = require('express');
 const router  = express.Router();
 const userQueries = require('../../db/queries/users');
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../../.env')});
+
+//Helpers
+const {isItem, categorizeItem, itemIntoDatabase} = require('../../helpers/aiHelpers');
 
 router.get('/', (req, res) => {
   userQueries.getUserItems(1)
@@ -57,19 +62,9 @@ router.post('/:id/delete', (req, res) => {
 
 });
 
-// router.post('/:id/update', (req, res) => {
-
-// })
-
-const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../../.env')});
-
-//Helpers
-const {isItem, categorizeItem, itemIntoDatabase} = require('../../helpers/aiHelpers');
-
 router.post('/:id/create', async (req, res) => {
   const item = req.body['new-item'];
-  const userid = req.params.id;
+  const user_id = req.params.id; // Make sure to use user_id consistently
   console.log(`Route hit with user_id: ${user_id}, item: ${item}`);
 
   try {
@@ -79,7 +74,7 @@ router.post('/:id/create', async (req, res) => {
       res.status(400).send({ error: 'This is not an item.' });
       return;
     }
-    console.log("*********Calling the categorize fuction::", categorizeItem(item));
+    console.log("*********Calling the categorize function::", categorizeItem(item));
     const category_id = await categorizeItem(item);
     console.log('Category ID:', category_id);
     const insertedItem = await itemIntoDatabase(user_id, item, category_id);
@@ -87,8 +82,7 @@ router.post('/:id/create', async (req, res) => {
 
     res.status(201).send(insertedItem);
     console.log('///////////// sending response to frontend///////', insertedItem);
-    res.status(200).send(insertedItem);
-    // res.redirect(`/users/${user_id}`);
+    // res.redirect(`/users/${user_id}`); // Uncomment this if you want to redirect after sending the response
   } catch (error) {
     console.error('Error:', error);
     res.status(500).send({ error: 'An error occurred while processing the item.' });
@@ -97,7 +91,7 @@ router.post('/:id/create', async (req, res) => {
 
 router.post('/:id/push', async (req, res) => {
   const item = req.body['new-item'];
-  const user_id = req.params.id;
+  const user_id = req.params.id; // Ensure consistency here as well
   const noneCategoryId = 4; 
 
   try {
@@ -108,5 +102,6 @@ router.post('/:id/push', async (req, res) => {
     res.status(500).send({ error: 'An error occurred while pushing the item to the "Product" category.' });
   }
 });
+
 
 module.exports = router;
