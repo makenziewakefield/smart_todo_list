@@ -11,43 +11,6 @@ const openai = new OpenAI({
   project: process.env.OPENAI_PROJECT_ID || undefined,
 });
 
-// const isItem = async function(item) {
-//   try {
-//     const response = await openai.chat.completions.create({
-//       model: "gpt-3.5-turbo",
-//       messages: [
-//         { role: "system", content: "You are an expert in item classification and whether they are real or not." },
-//         {
-//           role: "user",
-//           content: `Please verify if the item the user submitted is an actual item or not. If the item is a real item, return it as 1. If the item is not a real item, return it as 2.`
-//         }
-//       ],
-//       max_tokens: 100, // Adjust max_tokens as necessary
-//     });
-
-//     // Log the full response for debugging purposes
-//     console.log('OpenAI API Response:', response);
-
-//     // Assuming response.choices is an array with one choice
-//     const responseText = response.choices[0].message.content.trim().toLowerCase();
-
-//     // Check the response and determine if the item is valid
-//     if (responseText.includes('1')) {
-//       return true;
-//     } else if (responseText.includes('2')) {
-//       return false;
-//     } else {
-//       // Handle unexpected responses
-//       console.error('Unexpected response from OpenAI:', responseText);
-//       throw new Error('Unexpected response from OpenAI');
-//     }
-//   } catch (error) {
-//     console.error('Error calling OpenAI API:', error);
-//     throw error;
-//   }
-// };
-
-
  //Function to classify items into categories
 const categorizeItem = async function (item) {
   try {
