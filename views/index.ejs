@@ -2,26 +2,35 @@
 <html lang="en">
 
 <head>
-  <title>Home Page</title>
-
+  <title>Smart To Do List</title>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
-  <link rel="stylesheet" href="/vendor/border-box.css" />
-  <link rel="stylesheet" href="/styles/main.css" />
-  <link rel="stylesheet" href="/styles/layout.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
+  <!-- Custom Stylesheets -->
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css">
+  <link rel="stylesheet" href="/vendor/border-box.css">
+  <link rel="stylesheet" href="/styles/main.css">
+  <link rel="stylesheet" href="/styles/layout.css">
 
+  <!-- Google Fonts and Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap" rel="stylesheet">
+
+  <!-- jQuery and Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
   <script defer src="/scripts/users.js"></script>
-
 </head>
+
 
 <body>
   <nav>
@@ -37,86 +46,125 @@
       </form>
     </section>
 
-    <section class="todo-lists">
+    <section class="todo-lists" id="accordionExample">
+      <!-- Films/Series -->
       <div class="card">
-        <section id="films-list">
-          <h3 class="category-title">Films/Series</h3>
-          <ul id="films-items">
-            <% for (let item in userItems) {
-              if (userItems[item].category_id === 1) { %>
-                <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
-                  <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox<%= item.id %>" data-id="<%= userItems[item].id %>" <%= userItems[item].is_complete ? 'checked' : '' %> >
-                    <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
-                  </div>
-                  <div class="action-buttons">
-                    <button class="btn-delete btn-delete-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>"><i class="fa-regular fa-trash-can"></i></button>
-                  </div>
-                </li>
-            <% }}%>
-
-          </ul>
-        </section>
+        <div class="card-header" id="headingOne">
+          <button class="btn btn-link w-100 text-left card-btn" type="button" data-toggle="collapse"
+            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            <i class="fa-solid fa-film"></i>
+            Films/Series
+            <span class="accordion-chevron"></span>
+          </button>
+        </div>
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div class="card-body">
+            <ul id="films-items">
+              <% for (let item in userItems) {
+                if (userItems[item].category_id === 1) { %>
+                  <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
+                    <div class="form-check form-check-inline">
+                      <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox<%= item.id %>" data-id="<%= userItems[item].id %>" <%= userItems[item].is_complete ? 'checked' : '' %> >
+                      <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
+                    </div>
+                    <div class="action-buttons">
+                      <button class="btn-delete btn-delete-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>"><i class="fa-regular fa-trash-can"></i></button>
+                    </div>
+                  </li>
+              <% }}%>
+            </ul>
+          </div>
+        </div>
       </div>
 
+      <!-- Restaurants -->
       <div class="card">
-        <section id="restaurant-list">
-          <h3 class="category-title">Restaurants</h3>
-          <ul id="restaurants-items">
-            <% for (let item in userItems) {
-              if (userItems[item].category_id === 2) { %>
-                <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
-                  <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox<%= item.id %>" data-id="<%= userItems[item].id %>" <%= userItems[item].is_complete ? 'checked' : '' %> >
-                    <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
-                  </div>
-                  <div class="action-buttons">
-                    <button class="btn-delete btn-delete-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>"><i class="fa-regular fa-trash-can"></i></button>
-                  </div>
-                </li>
-            <% }}%>
-          </ul>
-        </section>
+        <div class="card-header" id="headingTwo">
+          <button class="btn btn-link w-100 text-left card-btn" type="button" data-toggle="collapse"
+            data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fa-solid fa-utensils"></i>
+            Restaurants
+            <span class="accordion-chevron"></span>
+          </button>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+          <div class="card-body">
+            <ul id="restaurants-items">
+              <% for (let item in userItems) {
+                if (userItems[item].category_id === 2) { %>
+                  <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
+                    <div class="form-check form-check-inline">
+                      <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox<%= item.id %>" data-id="<%= userItems[item].id %>" <%= userItems[item].is_complete ? 'checked' : '' %> >
+                      <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
+                    </div>
+                    <div class="action-buttons">
+                      <button class="btn-delete btn-delete-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>"><i class="fa-regular fa-trash-can"></i></button>
+                    </div>
+                  </li>
+              <% }}%>
+            </ul>
+          </div>
+        </div>
       </div>
 
+      <!-- Books -->
       <div class="card">
-        <section id="books-list">
-          <h3 class="category-title">Books</h3>
-          <ul id="books-items">
-            <% for (let item in userItems) {
-              if (userItems[item].category_id === 3) { %>
-                <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
-                  <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox<%= item.id %>" data-id="<%= userItems[item].id %>" <%= userItems[item].is_complete ? 'checked' : '' %> >
-                    <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
-                  </div>
-                  <div class="action-buttons">
-                    <button class="btn-delete btn-delete-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>"><i class="fa-regular fa-trash-can"></i></button>
-                  </div>
-                </li>
-            <% }}%>
-          </ul>
-        </section>
+        <div class="card-header" id="headingThree">
+          <button class="btn btn-link w-100 text-left card-btn" type="button" data-toggle="collapse"
+            data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+            <i class="fa-solid fa-book"></i>
+            Books
+            <span class="accordion-chevron"></span>
+          </button>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+          <div class="card-body">
+            <ul id="books-items">
+              <% for (let item in userItems) {
+                if (userItems[item].category_id === 3) { %>
+                  <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
+                    <div class="form-check form-check-inline">
+                      <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox<%= item.id %>" data-id="<%= userItems[item].id %>" <%= userItems[item].is_complete ? 'checked' : '' %> >
+                      <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
+                    </div>
+                    <div class="action-buttons">
+                      <button class="btn-delete btn-delete-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>"><i class="fa-regular fa-trash-can"></i></button>
+                    </div>
+                  </li>
+              <% }}%>
+            </ul>
+          </div>
+        </div>
       </div>
 
+      <!-- Products -->
       <div class="card">
-        <section id="to-buy-list">
-          <h3 class="category-title">To Buy</h3>
-          <ul id="to-buy-items">
-            <% for (let item in userItems) {
-              if (userItems[item].category_id === 4) { %>
-                <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
-                  <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox<%= item.id %>" data-id="<%= userItems[item].id %>" <%= userItems[item].is_complete ? 'checked' : '' %> >
-                    <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
-                  </div>
-                  <div class="action-buttons">
-                    <button class="btn-delete btn-delete-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>"><i class="fa-regular fa-trash-can"></i></button>
-                  </div>
-                </li>
-            <% }}%>
-          </ul>
-        </section>
+        <div class="card-header" id="headingFour">
+          <button class="btn btn-link w-100 text-left card-btn" type="button" data-toggle="collapse"
+            data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+            <i class="fa-solid fa-cart-shopping"></i>
+            To Buy
+            <span class="accordion-chevron"></span>
+          </button>
+        </div>
+        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+          <div class="card-body">
+            <ul id="to-buy-items">
+              <% for (let item in userItems) {
+                if (userItems[item].category_id === 4) { %>
+                  <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
+                    <div class="form-check form-check-inline">
+                      <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox<%= item.id %>" data-id="<%= userItems[item].id %>" <%= userItems[item].is_complete ? 'checked' : '' %> >
+                      <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
+                    </div>
+                    <div class="action-buttons">
+                      <button class="btn-delete btn-delete-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>"><i class="fa-regular fa-trash-can"></i></button>
+                    </div>
+                  </li>
+              <% }}%>
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
   </main>
