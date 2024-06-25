@@ -139,23 +139,32 @@
 
       <!-- Products -->
       <div class="card">
-        <section id="to-buy-list">
-          <h3 class="category-title">To Buy</h3>
-          <ul id="to-buy-items">
-            <% for (let item in userItems) {
-              if (userItems[item].category_id === 4) { %>
-                <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
-                  <div class="form-check form-check-inline">
-                    <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox<%= item.id %>" data-id="<%= userItems[item].id %>" <%= userItems[item].is_complete ? 'checked' : '' %> >
-                    <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
-                  </div>
-                  <div class="action-buttons">
-                    <button class="btn-delete btn-delete-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>"><i class="fa-regular fa-trash-can"></i></button>
-                  </div>
-                </li>
-            <% }}%>
-          </ul>
-        </section>
+        <div class="card-header" id="headingFour">
+          <button class="btn btn-link w-100 text-left card-btn" type="button" data-toggle="collapse"
+            data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+            <i class="fa-solid fa-cart-shopping"></i>
+            To Buy
+            <span class="accordion-chevron"></span>
+          </button>
+        </div>
+        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
+          <div class="card-body">
+            <ul id="to-buy-items">
+              <% for (let item in userItems) {
+                if (userItems[item].category_id === 4) { %>
+                  <li class="list-items incomp-items" data-item-id="<%= userItems[item].id %>">
+                    <div class="form-check form-check-inline">
+                      <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox<%= item.id %>" data-id="<%= userItems[item].id %>" <%= userItems[item].is_complete ? 'checked' : '' %> >
+                      <label class="form-check-label" for="inlineCheckbox1"><%= userItems[item].title %></label>
+                    </div>
+                    <div class="action-buttons">
+                      <button class="btn-delete btn-delete-<%= userItems[item].id %>" data-item-id="<%= userItems[item].id %>"><i class="fa-regular fa-trash-can"></i></button>
+                    </div>
+                  </li>
+              <% }}%>
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
   </main>

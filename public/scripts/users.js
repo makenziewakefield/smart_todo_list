@@ -74,7 +74,6 @@ $(() => {
       url: `/users/${itemId}/delete`
     })
     .done(() => {
-<<<<<<< HEAD
     // Handle success
     // alert('Item deleted successfully');
     $(`li[data-item-id="${itemId}"]`).remove();
@@ -83,11 +82,9 @@ $(() => {
       console.log( "Error: " + errorThrown );
       console.log( "Status: " + status );
       console.log( xhr );
-=======
       // Handle success
       alert('Item deleted successfully');
       $(`li[data-item-id="${itemId}"]`).remove();
->>>>>>> 2c8af41e387db0efa464c8a50af15db90d68d224
     });
   });
 
