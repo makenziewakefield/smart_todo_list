@@ -73,4 +73,27 @@ const itemComplete = (itemId, status) => {
     })
 };
 
-module.exports = { getUsers, getUserItems, addNewItem, deleteItem, updateItem, itemComplete };
+const updateCategory = (itemId, newCategory) => {
+  return db.query(
+    `UPDATE items
+    SET category_id = $2
+    WHERE id = $1
+    RETURNING *;
+    `, [itemId, newCategory])
+    .then(data => {
+      console.log('Updated item: ', data.rows);
+      return data.rows;
+    });
+};
+
+const updatedItem = (itemId, categoryId) => {
+  return db.query(
+    `UPDATE FROM items
+    SET category_id = ?
+    WHERE item_id = ? `,
+    [categoryId, itemId]);
+
+
+};
+
+module.exports = { getUsers, getUserItems, addNewItem, deleteItem, updateItem, itemComplete, updateCategory };

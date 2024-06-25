@@ -72,6 +72,7 @@ $(() => {
     });
   });
 
+  // Ajax call for COMPLETING an ITEM
   $('.todo-done').on('change', function (e) {
     e.preventDefault();
 
