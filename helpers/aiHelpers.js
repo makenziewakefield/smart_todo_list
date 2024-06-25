@@ -71,6 +71,7 @@ const itemIntoDatabase = async function (user_id, title, category_id) {
   }
 };
 
+
 const isItem = async function(word) {
   try {
     const response = await openai.chat.completions.create({
