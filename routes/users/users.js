@@ -67,25 +67,31 @@ router.post('/:id/delete', (req, res) => {
 
 router.post('/:id/create', async (req, res) => {
   const item = req.body['new-item'];
-  const user_id = req.params.id; // Make sure to use user_id consistently
+  const user_id = req.params.id;
+  const forceCategory = req.body.force_category === '4'; // Check if force_category is set to 4
   console.log(`Route hit with user_id: ${user_id}, item: ${item}`);
 
   try {
-    const isRealItem = await isItem(item);
-    console.log('Is real item:', isRealItem);
-    if (!isRealItem) {
-      res.status(400).send({ error: 'This is not an item.' });
-      return;
+    let category_id;
+
+    if (forceCategory) {
+      category_id = 4; // Set category_id to 4 if forced
+    } else {
+      const isRealItem = await isItem(item);
+      console.log('Is real item:', isRealItem);
+      if (!isRealItem) {
+        res.status(400).send({ error: 'This is not an item.' });
+        return;
+      }
+      category_id = await categorizeItem(item);
+      console.log('Category ID:', category_id);
     }
-    console.log("*********Calling the categorize function::", categorizeItem(item));
-    const category_id = await categorizeItem(item);
-    console.log('Category ID:', category_id);
+
     const insertedItem = await itemIntoDatabase(user_id, item, category_id);
     console.log('Inserted Item:', insertedItem);
 
     res.status(201).send(insertedItem);
     console.log('///////////// sending response to frontend///////', insertedItem);
-    // res.redirect(`/users/${user_id}`); // Uncomment this if you want to redirect after sending the response
   } catch (error) {
     console.error('Error:', error);
     res.status(500).send({ error: 'An error occurred while processing the item.' });
