@@ -119,25 +119,5 @@ router.post('/items/complete-status', (req, res) => {
 
   });
 
-  router.post('/:id/update-category', (req, res) => {
-
-    console.log('*****Update item re body body:*****', req.body.category_id);
-    const itemId = req.params.id;
-    const newCategory = req.body.category_id;
-
-    console.log('Recieved itemId:', itemId);
-    console.log('New ID:', newCategory);
-
-    userQueries.updateCategory(itemId, newCategory)
-      .then(updatedItem => {
-        console.log('Updated RETURNED ITEM', updatedItem);
-        res.json(updatedItem);
-      })
-      .catch(err => {
-        console.log('Error in DB operation:', err);
-        res.status(500).json({ error: err.message });
-      });
-
-    });
 
 module.exports = router;

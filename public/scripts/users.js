@@ -1,6 +1,5 @@
 // Client facing scripts here
 $(() => {
-  // Ajax call for ADDING an ITEM
   $('#add-item-form').submit((e) => {
     e.preventDefault();
     const userId = $('#item-submit-button').data('user-id');
@@ -22,7 +21,7 @@ $(() => {
         const $restaurantsUL = $('#restaurants-items');
         const $booksUl = $('#books-items');
         const $toBuyUl = $('#to-buy-items');
-        $('#add-item-form')[0].reset();
+
         const $newItem = $(`<li class="list-items incomp-items" data-item-id="${response.id}">
           <div class="form-check form-check-inline">
             <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
@@ -64,7 +63,6 @@ $(() => {
     submitItem(serializedData);
   });
 
-  // Ajax call for DELETING an ITEM
   $('.btn-delete').on('click', function (e) {
     e.preventDefault();
     const itemId = $(this).data('item-id');
@@ -74,21 +72,12 @@ $(() => {
       url: `/users/${itemId}/delete`
     })
     .done(() => {
-    // Handle success
-    // alert('Item deleted successfully');
-    $(`li[data-item-id="${itemId}"]`).remove();
-    })
-    .fail(( xhr, status, errorThrown ) => {
-      console.log( "Error: " + errorThrown );
-      console.log( "Status: " + status );
-      console.log( xhr );
       // Handle success
       alert('Item deleted successfully');
       $(`li[data-item-id="${itemId}"]`).remove();
     });
   });
 
-  // Ajax call for COMPLETING an ITEM
   $('.todo-done').on('change', function (e) {
     e.preventDefault();
     const itemId = $(this).data('id');
