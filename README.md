@@ -17,7 +17,11 @@ Using Openai to create a Smart To Do List. Submitting an item will be categorize
 
 ## Images
 ![Alt text](images/Empty_ToDo_List.png)
-An empty To Do List with the four categories
+An empty To Do List with the four categories.
+![Alt text](images/Smart_ToDo_List_Accordian.png)
+Smart To Do List, showing of one of the accordions.
+![Alt text](images/Error_message.png)
+Error message of when an item is determined to not be an item.
 
 ## Dependencies
 - chalk 
