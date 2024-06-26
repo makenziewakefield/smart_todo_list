@@ -21,11 +21,14 @@ $(() => {
         const $restaurantsUL = $('#restaurants-items');
         const $booksUl = $('#books-items');
         const $toBuyUl = $('#to-buy-items');
-
+        let $compStatus = 'unchecked';
+          if (response.is_complete === true) {
+            $compStatus = 'checked';
+          }
         const $newItem = $(`<li class="list-items incomp-items" data-item-id="${response.id}">
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-            <label class="form-check-label" for="inlineCheckbox1">${response.title}</label>
+          <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox${response.id}" data-id="${response.id}" ${$compStatus} >
+          <label class="form-check-label" for="inlineCheckbox1">${response.title}</label>
           </div>
           <div class="action-buttons">
           <button class="btn-update btn-update-${response.id}" data-item-id="${response.id}">Update</button>
@@ -33,7 +36,7 @@ $(() => {
           </div>
         </li>
         <form class="update-category-form update-${response.id}-form" style="display: none;" method="post" data-item-id="${response.id}">
-        <h4>Update Category</h4>
+        <p>Update Category:</p>
         <input type="hidden" id="update-item-id" name="item_id" value="">
         <div class="form-check">
           <input class="form-check-input" type="radio" name="category" id="category1" value="1">
@@ -85,7 +88,7 @@ $(() => {
     submitItem(serializedData);
   });
 
-  $(document).on('click', '.btn-delete', function (e) {
+  $(document).on('click', '.btn-delete', function(e) {
     e.preventDefault();
     const itemId = $(this).data('item-id');
     console.log('item id from the button data', itemId);
@@ -100,7 +103,7 @@ $(() => {
     });
   });
 
-  $(document).on('change','.todo-done', function (e) {
+  $(document).on('change','.todo-done', function(e) {
     e.preventDefault();
     const itemId = $(this).data('id');
     const isComplete = $(this).is(':checked');
@@ -199,10 +202,16 @@ $(() => {
           const $restaurantsUL = $('#restaurants-items');
           const $booksUl = $('#books-items');
           const $toBuyUl = $('#to-buy-items');
+          let $compStatus = 'unchecked';
+          console.log('STATUS of th eresponse: ', response[0].is_complete);
+          if (response[0].is_complete === true) {
+            console.log('STATUS is true: ', response[0].is_complete);
+            $compStatus = 'checked';
+          }
           const $newItem = $(`<li class="list-items incomp-items" data-item-id="${response[0].id}">
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-            <label class="form-check-label" for="inlineCheckbox1">${response[0].title}</label>
+          <input type="checkbox" class="form-check-input todo-done" id="inlineCheckbox${response[0].id}" data-id="${response[0].id}" ${$compStatus} >
+          <label class="form-check-label" for="inlineCheckbox1">${response[0].title}</label>
           </div>
           <div class="action-buttons">
             <button class="btn-update btn-update-${response[0].id}" data-item-id="${response[0].id}">Update</button>
@@ -210,7 +219,7 @@ $(() => {
           </div>
         </li>
         <form class="update-category-form update-${response[0].id}-form" style="display: none;" method="post" data-item-id="${response[0].id}">
-            <h4>Update Category</h4>
+            <p>Update Category:</p>
             <input type="hidden" id="update-item-id" name="item_id" value="">
             <div class="form-check">
               <input class="form-check-input" type="radio" name="category" id="category1" value="1">
