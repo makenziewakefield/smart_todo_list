@@ -1,6 +1,6 @@
 // Client facing scripts here
 $(() => {
-  $('#add-item-form').submit((e) => {
+  $(document).on('submit','#add-item-form', (e) => {
     e.preventDefault();
     const userId = $('#item-submit-button').data('user-id');
     const serializedData = $('#add-item-form').serialize();
@@ -28,9 +28,31 @@ $(() => {
             <label class="form-check-label" for="inlineCheckbox1">${response.title}</label>
           </div>
           <div class="action-buttons">
+          <button class="btn-update btn-update-${response.id}" data-item-id="${response.id}">Update</button>
             <button class="btn-delete btn-delete-${response.id}" data-item-id="${response.id}"><i class="fa-regular fa-trash-can"></i></button>
           </div>
-        </li>`);
+        </li>
+        <form class="update-category-form update-${response.id}-form" style="display: none;" method="post" data-item-id="${response.id}">
+        <h4>Update Category</h4>
+        <input type="hidden" id="update-item-id" name="item_id" value="">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="category" id="category1" value="1">
+          <label class="form-check-label" for="category1">Films/Series</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="category" id="category2" value="2">
+          <label class="form-check-label" for="category2">Restaurants</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="category" id="category3" value="3">
+          <label class="form-check-label" for="category3">Books</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="category" id="category4" value="4">
+          <label class="form-check-label" for="category4">To Buy</label>
+        </div>
+        <button type="submit">Update</button>
+      </form>`);
 
         if (response.category_id === 1) {
           $newItem.appendTo($filmsUl);
@@ -63,7 +85,7 @@ $(() => {
     submitItem(serializedData);
   });
 
-  $('.btn-delete').on('click', function (e) {
+  $(document).on('click', '.btn-delete', function (e) {
     e.preventDefault();
     const itemId = $(this).data('item-id');
     console.log('item id from the button data', itemId);
@@ -78,7 +100,7 @@ $(() => {
     });
   });
 
-  $('.todo-done').on('change', function (e) {
+  $(document).on('change','.todo-done', function (e) {
     e.preventDefault();
     const itemId = $(this).data('id');
     const isComplete = $(this).is(':checked');
@@ -134,4 +156,114 @@ $(() => {
       }
     });
   });
+
+  //***************************************************************************************** */
+  // Ajax call for UPDATING an ITEM
+  //***************************************************************************************** */
+    // Handle update button click
+    $(document).on('click', '.btn-update, .btn-cancel', function() {
+      const itemId = $(this).data('item-id');
+      $(`.update-${itemId}-form`).slideDown();
+
+      // Check if the button is currently "Update" or "Cancel"
+      if ($(`.btn-update-${itemId}`).text() === 'Update') {
+        $(`.btn-update-${itemId}`).text('Cancel').addClass('btn-cancel').removeClass('btn-update');
+        $(`.update-${itemId}-form`).slideDown();
+      } else {
+        $(this).text('Update').addClass('btn-update').removeClass('btn-cancel').addClass('btn-update');
+        $(`.update-${itemId}-form`).slideUp();
+      }
+    });
+
+    // Handle update form submission
+    $(document).on('submit', '.update-category-form', function(e) {
+      e.preventDefault();
+      const itemId = $(this).data('item-id');
+      // const itemId = $(e.target).find('.update-item-id').val();
+      const selectedCategory = $(e.target).find('input[name="category"]:checked').val();
+      console.log('ITEM ID && Selevted Category: ', itemId, selectedCategory);
+      if (!selectedCategory) {
+        alert('Please select a category.');
+        return;
+      }
+
+      $.ajax({
+        method: 'POST',
+        url: `/users/${itemId}/update-category`,
+        data: {
+          category_id: selectedCategory
+        },
+        success: (response) => {
+          console.log('Updated RETURNED ITEM category from backend', response[0].category_id);
+          const $filmsUl = $('#films-items');
+          const $restaurantsUL = $('#restaurants-items');
+          const $booksUl = $('#books-items');
+          const $toBuyUl = $('#to-buy-items');
+          const $newItem = $(`<li class="list-items incomp-items" data-item-id="${response[0].id}">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+            <label class="form-check-label" for="inlineCheckbox1">${response[0].title}</label>
+          </div>
+          <div class="action-buttons">
+            <button class="btn-update btn-update-${response[0].id}" data-item-id="${response[0].id}">Update</button>
+            <button class="btn-delete btn-delete-${response[0].id}" data-item-id="${response[0].id}"><i class="fa-regular fa-trash-can"></i></button>
+          </div>
+        </li>
+        <form class="update-category-form update-${response[0].id}-form" style="display: none;" method="post" data-item-id="${response[0].id}">
+            <h4>Update Category</h4>
+            <input type="hidden" id="update-item-id" name="item_id" value="">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="category" id="category1" value="1">
+              <label class="form-check-label" for="category1">Films/Series</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="category" id="category2" value="2">
+              <label class="form-check-label" for="category2">Restaurants</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="category" id="category3" value="3">
+              <label class="form-check-label" for="category3">Books</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="category" id="category4" value="4">
+              <label class="form-check-label" for="category4">To Buy</label>
+            </div>
+            <button type="submit">Update</button>
+          </form>`);
+
+        $(`li[data-item-id="${itemId}"]`).remove();
+
+        if (response[0].category_id === 1) {
+          $newItem.appendTo($filmsUl);
+        } else if (response[0].category_id === 2) {
+          $newItem.appendTo($restaurantsUL);
+        } else if (response[0].category_id === 3) {
+          // $(`<li class="incomp-items">`).text(response.title).appendTo($booksUl);
+          $newItem.appendTo($booksUl);
+        } else if (response[0].category_id === 4) {
+          $newItem.appendTo($toBuyUl);
+        }
+          // console.log('item id : ', itemId);
+          // Optionally, update the UI to reflect the change
+          // Hide the form and reset the button text after successful update
+          $(`.update-${itemId}-form`).slideUp();
+          $(this).text('Update').addClass('btn-update').removeClass('btn-cancel');
+        },
+        error: (xhr, status, errorThrown) => {
+          console.log("Error: " + errorThrown);
+          console.log("Status: " + status);
+          console.log(xhr);
+        }
+      });
+    });
+
+    $(document).on('click', function(e) {
+      const $form = $('#update-category-form');
+      if (!$form.is(e.target) && $form.has(e.target).length === 0 && !$(e.target).closest('.btn-update, .btn-cancel').length) {
+        // Hide the form and reset the button text if clicked outside the form
+        $form.slideUp();
+        $('.btn-cancel').text('Update').addClass('btn-update').removeClass('btn-cancel');
+      }
+    });
+
 });
