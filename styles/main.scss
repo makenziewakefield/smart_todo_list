@@ -76,3 +76,17 @@ li.list-items {
   margin-left: auto;
   font-size: 1rem;
 }
+button.btn-update, button.btn-cancel {
+  color: #51573A;
+  border: solid 2px #51573A;
+  border-radius: 5px;
+  background-color: #FEEAD1;
+}
+
+button.btn-update:hover, button.btn-cancel:hover {
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+button.btn-update:focus, button.btn-cancel:focus {
+  outline: 0px solid #51573A;
+}
